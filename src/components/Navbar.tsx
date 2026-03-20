@@ -2,17 +2,19 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-donna.png";
-
-const links = [
-  { label: "Sobre", href: "#sobre" },
-  { label: "Especialidades", href: "#especialidades" },
-  { label: "Instagram", href: "#instagram" },
-  { label: "Contato", href: "#contato" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { lang, toggleLang, t } = useLanguage();
+
+  const links = [
+    { label: t("nav.about"), href: "#sobre" },
+    { label: t("nav.services"), href: "#especialidades" },
+    { label: t("nav.instagram"), href: "#instagram" },
+    { label: t("nav.contact"), href: "#contato" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -28,11 +30,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex max-w-6xl items-center justify-between px-6">
         <a href="#">
-          <img
-            src={logo}
-            alt="Donna Empório Gourmet"
-            className="h-10 brightness-0 invert"
-          />
+          <img src={logo} alt="Donna Empório Gourmet" className="h-10 brightness-0 invert" />
         </a>
 
         {/* Desktop */}
@@ -46,16 +44,26 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
+          <button
+            onClick={toggleLang}
+            className="ml-4 rounded-full border border-cream/30 px-3 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-cream/70 transition-all duration-300 hover:border-gold hover:text-gold"
+          >
+            {lang === "pt" ? "EN" : "PT"}
+          </button>
         </div>
 
         {/* Mobile toggle */}
-        <button
-          className="text-cream md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <button
+            onClick={toggleLang}
+            className="rounded-full border border-cream/30 px-3 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.15em] text-cream/70 transition-all duration-300 hover:border-gold hover:text-gold"
+          >
+            {lang === "pt" ? "EN" : "PT"}
+          </button>
+          <button className="text-cream" onClick={() => setOpen(!open)} aria-label="Menu">
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
