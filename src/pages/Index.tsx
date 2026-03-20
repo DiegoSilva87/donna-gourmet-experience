@@ -1,3 +1,4 @@
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -11,7 +12,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 
 const Index = () => {
   return (
-    <>
+    <LanguageProvider>
       <Navbar />
       <HeroSection />
       <AboutSection />
@@ -22,7 +23,7 @@ const Index = () => {
       <ContactSection />
       <Footer />
       <WhatsAppButton />
-    </>
+    </LanguageProvider>
   );
 };
 
